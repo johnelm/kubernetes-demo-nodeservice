@@ -1,6 +1,7 @@
 {
   "name": "demo-rest-nodeservice",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "My cool app",
   "main": "index.js",
   "scripts": {
