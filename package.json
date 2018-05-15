@@ -21,7 +21,7 @@
     "swagger-express-middleware": "^1.0.0-alpha.12"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
+    "babel-eslint": "^8.2.3",
     "babel-preset-env": "^1.6.1",
     "backpack-core": "^0.7.0",
     "chai": "^4.1.2",
