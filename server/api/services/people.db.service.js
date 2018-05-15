@@ -1,10 +1,10 @@
-class ExamplesDatabase {
+class PeopleDatabase {
   constructor() {
     this._data = [];
     this._counter = 0;
 
-    this.insert('example 0');
-    this.insert('example 1');
+    this.insert('people 0');
+    this.insert('people 1');
   }
 
   all() {
@@ -28,4 +28,4 @@ class ExamplesDatabase {
   }
 }
 
-export default new ExamplesDatabase();
+export default new PeopleDatabase();

@@ -35,6 +35,6 @@ cf push demo-rest-nodeservice
 ```
 
 ### Try It
-* Point you're browser to [http://localhost:3000](http://localhost:3000)
-* Invoke the example REST endpoint `curl http://localhost:3000/api/v1/examples`
+* Point your browser to [http://localhost:3000](http://localhost:3000)
+* Invoke the people REST endpoint `curl http://localhost:3000/api/v1/people`
    

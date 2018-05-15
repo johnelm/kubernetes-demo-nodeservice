@@ -2,10 +2,10 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: demo-rest-nodeservice
-  description: My cool app
+  description: My cool REST service
 basePath: /api/v1
 tags:
-  - name: Examples
+  - name: People
     description: Simple example endpoints
   - name: Specification
     description: The swagger API specification
@@ -17,7 +17,7 @@ produces:
 
 
 definitions:
-  ExampleBody:
+  PersonBody:
     type: object
     title: example
     required:
@@ -25,20 +25,23 @@ definitions:
     properties:
       name:
         type: string
-        example: no_stress
+        example: Joe Schmoe
+      phone:
+        type: string
+        example: '(403) 867-5309'
 
 paths:
-  /examples:
+  /people:
     get:
       tags:
-        - Examples
-      description: Fetch all examples
+        - People
+      description: Fetch all people
       responses:
         200:
-          description: Returns all examples
+          description: Returns all people
     post:
       tags:
-        - Examples
+        - People
       description: Create a new example
       parameters:
         - name: example
@@ -46,15 +49,15 @@ paths:
           description: an example
           required: true
           schema: 
-            $ref: "#/definitions/ExampleBody"
+            $ref: "#/definitions/PersonBody"
       responses:
         200:
-          description: Returns all examples
+          description: Returns all people
 
-  /examples/{id}:
+  /people/{id}:
     get:
       tags:
-        - Examples
+        - People
       parameters:
         - name: id
           in: path

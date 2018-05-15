@@ -1,7 +1,7 @@
 import l from '../../common/logger';
-import db from './examples.db.service';
+import db from './people.db.service';
 
-class ExamplesService {
+class PeopleService {
   all() {
     l.info(`${this.constructor.name}.all()`);
     return db.all();
@@ -17,4 +17,4 @@ class ExamplesService {
   }
 }
 
-export default new ExamplesService();
+export default new PeopleService();

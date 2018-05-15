@@ -1,13 +1,16 @@
+// const chai = require( 'chai' );
+// const { request } = require( 'supertest' ); 
+// const { Server } = require('../server');
 import chai from 'chai';
 import request from 'supertest';
 import Server from '../server';
 
 const expect = chai.expect;
 
-describe('Examples', () => {
-  it('should get all examples', () =>
+describe('People', () => {
+  it('should get all people', () =>
     request(Server)
-      .get('/api/v1/examples')
+      .get('/api/v1/people')
       .expect('Content-Type', /json/)
       .then(r => {
         expect(r.body)
@@ -15,9 +18,9 @@ describe('Examples', () => {
           .of.length(2);
       }));
 
-  it('should add a new example', () =>
+  it('should add a new person', () =>
     request(Server)
-      .post('/api/v1/examples')
+      .post('/api/v1/people')
       .send({ name: 'test' })
       .expect('Content-Type', /json/)
       .then(r => {
@@ -27,9 +30,9 @@ describe('Examples', () => {
           .equal('test');
       }));
 
-  it('should get an example by id', () =>
+  it('should get a person by id', () =>
     request(Server)
-      .get('/api/v1/examples/2')
+      .get('/api/v1/people/2')
       .expect('Content-Type', /json/)
       .then(r => {
         expect(r.body)

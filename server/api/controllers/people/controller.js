@@ -1,13 +1,13 @@
-import ExamplesService from '../../services/examples.service';
+import PeopleService from '../../services/people.service';
 
 export class Controller {
   all(req, res) {
-    ExamplesService.all()
+    PeopleService.all()
       .then(r => res.json(r));
   }
 
   byId(req, res) {
-    ExamplesService
+    PeopleService
       .byId(req.params.id)
       .then(r => {
         if (r) res.json(r);
@@ -16,11 +16,11 @@ export class Controller {
   }
 
   create(req, res) {
-    ExamplesService
+    PeopleService
       .create(req.body.name)
       .then(r => res
         .status(201)
-        .location(`/api/v1/examples/${r.id}`)
+        .location(`/api/v1/people/${r.id}`)
         .json(r));
   }
 }
