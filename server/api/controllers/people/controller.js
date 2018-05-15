@@ -17,7 +17,7 @@ export class Controller {
 
   create(req, res) {
     PeopleService
-      .create(req.body.name)
+      .create(req.body.firstname, req.body.lastname)
       .then(r => res
         .status(201)
         .location(`/api/v1/people/${r.id}`)

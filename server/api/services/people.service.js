@@ -12,8 +12,8 @@ class PeopleService {
     return db.byId(id);
   }
 
-  create(name) {
-    return db.insert(name);
+  create(firstname, lastname) {
+    return db.insert(firstname, lastname);
   }
 }
 

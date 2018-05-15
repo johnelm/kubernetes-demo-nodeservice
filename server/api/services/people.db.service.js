@@ -3,8 +3,8 @@ class PeopleDatabase {
     this._data = [];
     this._counter = 0;
 
-    this.insert('people 0');
-    this.insert('people 1');
+    this.insert('Joe', 'Schmoe');
+    this.insert('Joanne', 'Spokane');
   }
 
   all() {
@@ -15,10 +15,11 @@ class PeopleDatabase {
     return Promise.resolve(this._data[id]);
   }
 
-  insert(name) {
+  insert(firstname, lastname) {
     const record = {
       id: this._counter,
-      name,
+      firstname,
+      lastname,
     };
 
     this._counter += 1;

@@ -19,16 +19,20 @@ produces:
 definitions:
   PersonBody:
     type: object
-    title: example
+    title: person
     required:
-      - name
+      - firstname
+      - lastname
     properties:
-      name:
+      firstname:
         type: string
-        example: Joe Schmoe
-      phone:
+        example: Joe
+      lastname:
         type: string
-        example: '(403) 867-5309'
+        example: Schmoe
+      # phone:
+      #   type: string
+      #   example: '(403) 867-5309'
 
 paths:
   /people:
@@ -42,17 +46,19 @@ paths:
     post:
       tags:
         - People
-      description: Create a new example
+      description: Create a new person
       parameters:
-        - name: example
+        - name: person
           in: body
-          description: an example
+          description: a person
           required: true
           schema: 
             $ref: "#/definitions/PersonBody"
       responses:
-        200:
-          description: Returns all people
+        201:
+          description: Returns created person
+        400:
+          description: Bad request
 
   /people/{id}:
     get:
@@ -62,13 +68,13 @@ paths:
         - name: id
           in: path
           required: true
-          description: The id of the example to retrieve
+          description: The id of the person to retrieve
           type: integer
       responses:
         200:
-          description: Return the example with the specified id
+          description: Return the person with the specified id
         404:
-          description: Example not found
+          description: Person not found
 
   /spec:
     get:
