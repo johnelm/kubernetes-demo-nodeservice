@@ -11,17 +11,17 @@
     "babel-preset-env"
   ],
   "cql.address": "192.168.99.100:31928",
-  "cql.port": 31928,
+  "cql.port": 31928, // seems to be ignored
   "cql.resultStyle": {
     "format": "tabular",
     "location": "output"
   },
-  // "cql.schema": {
-  //   "contactPoints": [
-  //     "127.0.0.1"
-  //   ],
-  //   "hosts": [
-  //     "127.0.0.1"
-  //   ]
-  // }
+  "cql.schema": {
+    "contactPoints": [
+      "192.168.99.100:31928"
+    ],
+    "hosts": [
+      "192.168.99.100:31928"
+    ]
+  }
 }
