@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: people-config-kubernetes
+  namespace: default
+data:
+  APP_ID: demo-rest-nodeservice
+  PORT: '3000'
+  LOG_LEVEL: debug
+  NODE_ENV: production # not really prod
+  REQUEST_LIMIT: 100kb
+  SESSION_SECRET: mySecret  # not used, but it should go in a secret for example's sake
+  CASSANDRA_HOST: cassandra
+  CASSANDRA_PORT: '9042'
+  SWAGGER_API_SPEC: /spec
