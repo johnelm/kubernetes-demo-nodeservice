@@ -1,0 +1,67 @@
+minikube addons open heapster
+kubectl expose service cassandra --port=9042 --target-port=9042 --name=cassandra-external --type LoadBalancer
+kc set image deployment/people-node people-node=people-node:v2
+
+
+ms openshift config set --target master --patch '{"kubernetesMasterConfig": {"feature-gates": [ "PersistentLocalVolumes=true" ] } }'
+ms openshift config set --target node --patch '{"controllerArguments": {"feature-gates": [ "PersistentLocalVolumes=true" ] } }'
+ms openshift config set --target node --patch '{"kubeletArguments": {"feature-gates": [ "PersistentLocalVolumes=true" ] } }'
+
+Patching OpenShift configuration '/var/lib/origin/openshift.local.config/master/master-config.yaml' with '{"kubernetesMasterConfig": {"feature-gates": [ "PersistentLocalVolumes=true" ] } }'
+
+
+
+$ oc new-app -p CONFIGMAP=local-volume-config   -p SERVICE_ACCOUNT=local-storage-admin   -p NAMESPACE=local-storage local-storage-provisioner
+--> Deploying template "myproject/local-storage-provisioner" to project myproject
+
+     * With parameters:
+        * SERVICE_ACCOUNT=local-storage-admin
+        * NAMESPACE=local-storage
+        * CONFIGMAP=local-volume-config
+        * PROVISIONER_IMAGE=quay.io/external_storage/local-volume-provisioner:v1.0.1
+
+--> Creating resources ...
+    error: clusterrolebindings.authorization.openshift.io "local-storage:provisioner-pv-binding" already exists
+    error: clusterrolebindings.authorization.openshift.io "local-storage:provisioner-node-binding" already exists
+    error: daemonsets.extensions "local-volume-provisioner" already exists
+--> Failed
+
+local-storage:provisioner-node-binding /system:node local-storage/local-storage-admin
+local-storage:provisioner-pv-binding /system:persistent-volume-provisioner local-storage/local-storage-admin
+
+
+"{"kubernetesMasterConfig": {"feature-gates": [ "PersistentLocalVolumes=true" ] } }"
+
+'{"kubernetesMasterConfig": {"feature-gates": [ "PersistentLocalVolumes=true" ] } }'
+
+
+
+kubernetesMasterConfig:
+  admissionConfig:
+    pluginConfig: null
+  apiLevels: null
+  apiServerArguments:
+    runtime-config:
+    - apis/admissionregistration.k8s.io/v1alpha1=true
+    storage-backend:
+    - etcd3
+    storage-media-type:
+    - application/vnd.kubernetes.protobuf
+  controllerArguments: null
+  disabledAPIGroupVersions: {}
+  masterCount: 1
+  masterEndpointReconcileTTL: 15
+  masterIP: 127.0.0.1
+  podEvictionTimeout: 5m
+  proxyClientInfo:
+    certFile: master.proxy-client.crt
+    keyFile: master.proxy-client.key
+  schedulerArguments: null
+  schedulerConfigFile: ""
+  servicesNodePortRange: 30000-32767
+  servicesSubnet: 172.30.0.0/16
+  staticNodeNames: null
+
+  apiServerArguments:
+   feature-gates:
+   - PersistentLocalVolumes=true

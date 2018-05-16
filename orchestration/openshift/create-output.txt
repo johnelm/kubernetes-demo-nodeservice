@@ -1,0 +1,23 @@
+$ oc new-app .
+--> Found Docker image f697cb5 (6 days old) from Docker Hub for "node:10.1.0"
+
+    * An image stream will be created as "node:10.1.0" that will track the source image
+    * A Docker build using source code from https://github.com/johnelm/kubernetes-demo-nodeservice.git#master will be created
+      * The resulting image will be pushed to image stream "kubernetes-demo-nodeservice:latest"
+      * Every time "node:10.1.0" changes a new build will be triggered
+    * This image will be deployed in deployment config "kubernetes-demo-nodeservice"
+    * Port 3000 will be load balanced by service "kubernetes-demo-nodeservice"
+      * Other containers can access this service through the hostname "kubernetes-demo-nodeservice"
+    * WARNING: Image "node:10.1.0" runs as the 'root' user which may not be permitted by your cluster administrator
+
+--> Creating resources ...
+    imagestream "node" created
+    imagestream "kubernetes-demo-nodeservice" created
+    buildconfig "kubernetes-demo-nodeservice" created
+    deploymentconfig "kubernetes-demo-nodeservice" created
+    service "kubernetes-demo-nodeservice" created
+--> Success
+    Build scheduled, use 'oc logs -f bc/kubernetes-demo-nodeservice' to track its progress.
+    Application is not exposed. You can expose services to the outside world by executing one or more of the commands below:
+     'oc expose svc/kubernetes-demo-nodeservice'
+    Run 'oc status' to view your app.`

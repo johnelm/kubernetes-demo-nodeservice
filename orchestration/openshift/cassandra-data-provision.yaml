@@ -1,0 +1,9 @@
+kind: ConfigMap
+metadata:
+  name: local-volume-config
+data:
+    "fast": | 
+      {
+        "hostDir": "/mnt/local-storage/cassandra-data", 
+        "mountDir": "/mnt/local-storage/cassandra-data" 
+      }

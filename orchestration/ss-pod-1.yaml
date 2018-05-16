@@ -1,0 +1,154 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    openshift.io/scc: privileged
+  creationTimestamp: '2018-05-16T11:43:04Z'
+  generateName: cassandra-
+  labels:
+    app: cassandra
+    controller-revision-hash: cassandra-647bb66bc
+    statefulset.kubernetes.io/pod-name: cassandra-0
+  name: cassandra-0
+  namespace: myproject
+  ownerReferences:
+    - apiVersion: apps/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: cassandra
+      uid: 5fe421de-58f4-11e8-83f0-ba49428298c3
+  resourceVersion: '27858'
+  selfLink: /api/v1/namespaces/myproject/pods/cassandra-0
+  uid: 4ba31fff-58fe-11e8-83f0-ba49428298c3
+spec:
+  containers:
+    - env:
+        - name: MAX_HEAP_SIZE
+          value: 512M
+        - name: HEAP_NEWSIZE
+          value: 100M
+        - name: CASSANDRA_SEEDS
+          value: cassandra-0.cassandra.default.svc.cluster.local
+        - name: CASSANDRA_CLUSTER_NAME
+          value: K8Demo
+        - name: CASSANDRA_DC
+          value: DC1-K8Demo
+        - name: CASSANDRA_RACK
+          value: Rack1-K8Demo
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+      image: 'gcr.io/google-samples/cassandra:v13'
+      imagePullPolicy: Always
+      lifecycle:
+        preStop:
+          exec:
+            command:
+              - /bin/sh
+              - '-c'
+              - >
+                nodetool drain; nodetool decommission; #
+                https://wiki.apache.org/cassandra/NodeTool nodetool removetoken;
+                #
+                https://stackoverflow.com/questions/13300709/best-way-to-shrink-a-cassandra-cluster
+      name: cassandra
+      ports:
+        - containerPort: 7000
+          name: intra-node
+          protocol: TCP
+        - containerPort: 7001
+          name: tls-intra-node
+          protocol: TCP
+        - containerPort: 7199
+          name: jmx
+          protocol: TCP
+        - containerPort: 9042
+          name: cql
+          protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+            - /bin/bash
+            - '-c'
+            - /ready-probe.sh
+        failureThreshold: 3
+        initialDelaySeconds: 15
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        capabilities:
+          add:
+            - IPC_LOCK
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+        - mountPath: /cassandra_data
+          name: cassandra-data
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          name: cassandra-serviceaccount-token-lfvrk
+          readOnly: true
+  dnsPolicy: ClusterFirst
+  hostname: cassandra-0
+  imagePullSecrets:
+    - name: cassandra-serviceaccount-dockercfg-l9vzl
+  nodeName: localhost
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: cassandra-serviceaccount
+  serviceAccountName: cassandra-serviceaccount
+  subdomain: cassandra
+  terminationGracePeriodSeconds: 1800
+  tolerations:
+    - effect: NoSchedule
+      key: node.kubernetes.io/memory-pressure
+      operator: Exists
+  volumes:
+    - name: cassandra-data
+      persistentVolumeClaim:
+        claimName: cassandra-data-cassandra-0
+    - name: cassandra-serviceaccount-token-lfvrk
+      secret:
+        defaultMode: 420
+        secretName: cassandra-serviceaccount-token-lfvrk
+status:
+  conditions:
+    - lastProbeTime: null
+      lastTransitionTime: '2018-05-16T11:43:04Z'
+      status: 'True'
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: '2018-05-16T11:43:04Z'
+      message: 'containers with unready status: [cassandra]'
+      reason: ContainersNotReady
+      status: 'False'
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: '2018-05-16T11:43:04Z'
+      status: 'True'
+      type: PodScheduled
+  containerStatuses:
+    - image: 'gcr.io/google-samples/cassandra:v13'
+      imageID: ''
+      lastState: {}
+      name: cassandra
+      ready: false
+      restartCount: 0
+      state:
+        waiting:
+          reason: ContainerCreating
+  hostIP: 10.0.2.15
+  phase: Pending
+  qosClass: Guaranteed
+  startTime: '2018-05-16T11:43:04Z'
