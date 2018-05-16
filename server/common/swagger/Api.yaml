@@ -24,6 +24,9 @@ definitions:
       - firstname
       - lastname
     properties:
+      id:
+        type: string
+        example: 'bb235346-30c7-4ca5-bd9f-f70635362d59'
       firstname:
         type: string
         example: Joe
@@ -69,7 +72,8 @@ paths:
           in: path
           required: true
           description: The id of the person to retrieve
-          type: integer
+          type: string
+          example: 'bb235346-30c7-4ca5-bd9f-f70635362d59'
       responses:
         200:
           description: Return the person with the specified id

@@ -1,31 +1,77 @@
+import l from '../../common/logger';
+import cassandra from 'cassandra-driver';
+const client = new cassandra.Client({ contactPoints: ['192.168.99.100:31928'] });
+const Uuid = cassandra.types.Uuid;
+
 class PeopleDatabase {
   constructor() {
-    this._data = [];
-    this._counter = 0;
-
-    this.insert('Joe', 'Schmoe');
+    this.insert('Joe', 'Schmoe'); // add some starter data
     this.insert('Joanne', 'Spokane');
   }
 
   all() {
-    return Promise.resolve(this._data);
+    const query = 'SELECT id, firstname, lastname FROM people.people;';
+
+    return client.execute(query, { prepare: true })
+    .then( result => {
+        let retval = [];
+        for (let row of result) {
+          retval.push( 
+            {
+              id: row.id,
+              firstname: row.firstname,
+              lastname: row.lastname
+            }
+           );
+        }
+        return retval ;
+      })
+      .catch( err => {
+        l.error ( err );
+        throw new Error( err );
+      });
   }
 
   byId(id) {
-    return Promise.resolve(this._data[id]);
+    const query = 'SELECT id, firstname, lastname FROM people.people WHERE id = ?;';
+    const params = [ id ];
+
+    return client.execute(query, params, { prepare: true })
+      .then( result => {
+        let row = result.first();
+        return {
+          id: row.id,
+          firstname: row.firstname,
+          lastname: row.lastname
+        }
+      })
+      .catch( err => {
+        l.error ( err );
+        throw new Error( err );
+      });
+      
   }
 
   insert(firstname, lastname) {
-    const record = {
-      id: this._counter,
-      firstname,
-      lastname,
-    };
 
-    this._counter += 1;
-    this._data.push(record);
+    const id = Uuid.random();
+    const query = 'INSERT INTO people.people ( id, firstname, lastname) VALUES ( ?, ?, ? );'; 
+    const params = [ id, firstname, lastname ];
 
-    return Promise.resolve(record);
+    return client.execute(query, params, { prepare: true })
+      .then( result => {
+        console.log(`row ${id} inserted on the cluster: ${result.info.queriedHost}`);
+        const record = {
+          id,
+          firstname,
+          lastname,
+        };
+        return record;
+      }).catch( err => {
+        console.error( err );
+        throw new Error( err );
+      });
+
   }
 }
 

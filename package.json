@@ -5,7 +5,7 @@
   "description": "My cool app",
   "main": "index.js",
   "scripts": {
-    "start": "cd build && node main",
+    "start": "cd build && node main | pino -o 'short'",
     "compile": "node build.js && backpack build",
     "dev": "node build.js && backpack dev | pino -o 'short'",
     "debug": "node build.js && backpack dev --inspect-brk | pino -o 'short'",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cassandra-driver": "^3.5.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
