@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: people-service
-        image: people-service:v1
+        image: people-service:v2
         ports:
         - containerPort: 3000
           protocol: TCP
