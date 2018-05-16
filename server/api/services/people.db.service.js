@@ -1,6 +1,6 @@
 import l from '../../common/logger';
 import cassandra from 'cassandra-driver';
-const client = new cassandra.Client({ contactPoints: ['192.168.99.100:31928'] });
+const client = new cassandra.Client({ contactPoints: [`${process.env.CASSANDRA_HOST}:process.env.CASSANDRA_PORT` ] });
 const Uuid = cassandra.types.Uuid;
 
 class PeopleDatabase {
