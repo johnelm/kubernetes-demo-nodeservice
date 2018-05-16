@@ -9,5 +9,19 @@
   },
   "mocha.requires": [
     "babel-preset-env"
-  ]
+  ],
+  "cql.address": "192.168.99.100:31928",
+  "cql.port": 31928,
+  "cql.resultStyle": {
+    "format": "tabular",
+    "location": "output"
+  },
+  // "cql.schema": {
+  //   "contactPoints": [
+  //     "127.0.0.1"
+  //   ],
+  //   "hosts": [
+  //     "127.0.0.1"
+  //   ]
+  // }
 }
