@@ -5,8 +5,10 @@ const Uuid = cassandra.types.Uuid;
 
 class PeopleDatabase {
   constructor() {
-    this.insert('Joe', 'Schmoe'); // add some starter data
-    this.insert('Joanne', 'Spokane');
+    if ( process.env.NODE_ENV !== 'production' ) {
+      this.insert( 'Joe', 'Schmoe', { arbitraryId: Uuid.fromString( 'bb235346-30c7-4ca5-bd9f-f70635362d59' ) } );
+      this.insert( 'Joanne', 'Spokane' );
+    }
   }
 
   all() {

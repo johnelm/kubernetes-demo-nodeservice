@@ -1,3 +1,6 @@
+---
+# Note: The Headless Service must be created before this StatefulSet, and cannot be in the same yaml file unless a way is 
+# found to delay creation of the latter until the service's creation is complete.
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

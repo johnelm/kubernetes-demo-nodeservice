@@ -60,6 +60,12 @@ spec:
           - sh
           - -c 
           - "cqlsh cassandra -e \"CREATE TABLE IF NOT EXISTS people.people (  id UUID PRIMARY KEY, firstname text, lastname text );\""
+        - name: init-sample-data
+          image: cassandra
+          command:
+          - sh
+          - -c 
+          - "cqlsh cassandra -e \"INSERT INTO people.people ( id, firstname, lastname ) VALUES ( bb235346-30c7-4ca5-bd9f-f70635362d59, 'John', 'Heimer-Schmidt' ) IF NOT EXISTS;\""
   strategy:
     type: RollingUpdate
     rollingUpdate:
