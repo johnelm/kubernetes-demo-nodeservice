@@ -43,13 +43,13 @@ spec:
         lifecycle:
           preStop:
             exec:
-              command: 
+              command:
               - /bin/sh
               - -c
               - >
-                nodetool drain;
-                nodetool decommission; # https://wiki.apache.org/cassandra/NodeTool
-                nodetool removetoken; # https://stackoverflow.com/questions/13300709/best-way-to-shrink-a-cassandra-cluster
+                nodetool drain
+                # nodetool decommission; # https://wiki.apache.org/cassandra/NodeTool
+                # nodetool removetoken; # https://stackoverflow.com/questions/13300709/best-way-to-shrink-a-cassandra-cluster
         env:
           - name: MAX_HEAP_SIZE
             value: 512M
